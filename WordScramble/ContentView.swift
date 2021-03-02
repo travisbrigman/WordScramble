@@ -45,12 +45,17 @@ struct ContentView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                 
-                List(usedWords, id: \.self) {
-                    Image(systemName: "\($0.count).circle")
-                    Text($0)
+                List(usedWords, id: \.self) { word in
+                    HStack {
+                    Image(systemName: "\(word.count).circle")
+                    Text(word)
                 }
-                Text("Current Score: \(score)")
                 .foregroundColor(.black)
+                        .accessibilityElement(children: .ignore)
+                        .accessibility(label: Text("\(word), \(word.count) letters"))
+                }
+                Text("Current Score: \(self.score)")
+                .padding()
             }
         .navigationBarTitle(rootWord)
         .navigationBarItems(leading: Button(action: startNewGame) {
@@ -61,7 +66,6 @@ struct ContentView: View {
                 .init(title: Text(errorTitle), message: Text(errorMessage), dismissButton: .default(Text("OK")))
             }
         }
-        
     }
 
     
